@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.provider.ssb.klass.service.EventHandlerService;
+import no.fint.provider.felles.kodeverk.service.EventHandlerService;
 import no.fint.sse.FintSse;
 import no.fint.sse.FintSseConfig;
 import no.fint.sse.oauth.TokenService;

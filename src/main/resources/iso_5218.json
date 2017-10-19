@@ -1,0 +1,29 @@
+[{
+        "systemId": {
+            "identifikatorverdi": "0"
+        },
+        "kode": "0",
+        "navn": "uvisst"
+    },
+    {
+        "systemId": {
+            "identifikatorverdi": "1"
+        },
+        "kode": "1",
+        "navn": "mann"
+    },
+    {
+        "systemId": {
+            "identifikatorverdi": "2"
+        },
+        "kode": "2",
+        "navn": "kvinne"
+    },
+    {
+        "systemId": {
+            "identifikatorverdi": "9"
+        },
+        "kode": "9",
+        "navn": "gjelder ikke"
+    }
+]

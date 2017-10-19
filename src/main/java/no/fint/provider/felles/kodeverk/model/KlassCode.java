@@ -1,9 +1,9 @@
-package no.fint.provider.ssb.klass.model;
+package no.fint.provider.felles.kodeverk.model;
 
 import lombok.Data;
 
 @Data
-public class Code {
+public class KlassCode {
 
 	String code;
 	String parentCode;

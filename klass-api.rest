@@ -1,4 +1,4 @@
-GET http://data.ssb.no/api/klass/v1/classifications/search?query=kommuner HTTP/1.1
+GET http://data.ssb.no/api/klass/v1/classifications/search?query=fylker HTTP/1.1
 Accept: application/json
 
 ====
@@ -8,5 +8,5 @@ Accept: application/json
 
 ===
 
-GET http://data.ssb.no/api/klass/v1/classifications/131/codes?from=1900-01-01&to=2199-12-31 HTTP/1.0
+GET http://data.ssb.no/api/klass/v1/classifications/104/codes?from=1900-01-01&to=2199-12-31 HTTP/1.0
 Accept: application/json

@@ -7,7 +7,7 @@ import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
 import no.fint.event.model.Status;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.provider.ssb.klass.SupportedActions;
+import no.fint.provider.felles.kodeverk.SupportedActions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

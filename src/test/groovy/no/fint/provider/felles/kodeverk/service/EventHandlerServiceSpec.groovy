@@ -1,10 +1,10 @@
-package no.fint.provider.ssb.klass.service
+package no.fint.provider.felles.kodeverk.service
 
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.provider.adapter.event.EventResponseService
 import no.fint.provider.adapter.event.EventStatusService
-import no.fint.provider.ssb.klass.service.EventHandlerService
+import no.fint.provider.felles.kodeverk.service.EventHandlerService
 import spock.lang.Specification
 
 class EventHandlerServiceSpec extends Specification {

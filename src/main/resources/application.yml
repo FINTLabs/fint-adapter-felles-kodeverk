@@ -2,16 +2,23 @@ server:
  port: 8091
 
 springfox:
- title: 'FINT SSE Adapter Skeleton'
+ title: 'FINT SSE Adapter Felles Kodeverk'
  version: '@version@'
 
-base-url: https://play-with-fint-adapter.felleskomponent.no/provider
+base-url: https://beta.felleskomponent.no/felles/kodeverk/provider
 fint:
  adapter:
-  organizations: pwfa.no
+  organizations: fint.felles.kodeverk
   sse-endpoint: ${base-url}/sse/%s
   status-endpoint: ${base-url}/status
   response-endpoint: ${base-url}/response
+
+ ssb-klass:
+  root-url: http://data.ssb.no/api/klass/v1/classifications
+  kommune: 131
+  fylke: 104
+  valid-from: 1900-01-01
+  valid-to: 2199-12-31
 
  oauth:
   enabled: true
