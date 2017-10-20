@@ -10,6 +10,7 @@ import java.util.Date;
 import no.fint.model.felles.basisklasser.Begrep;
 import no.fint.model.felles.kodeverk.Fylke;
 import no.fint.model.felles.kodeverk.Kommune;
+import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.felles.kompleksedatatyper.Periode;
 
 public class Mapper {
@@ -27,12 +28,16 @@ public class Mapper {
 	}
 	
 	private static void copy(KlassCode code, Begrep begrep) {
+        Identifikator systemId = new Identifikator();
+        systemId.setIdentifikatorverdi(code.getCode());
+        begrep.setSystemId(systemId);
 		begrep.setKode(code.getCode());
 		begrep.setNavn(code.getName());
 		Periode periode = new Periode();
 		periode.setStart(parseDate(code.getValidFromInRequestedRange()));
 		periode.setSlutt(parseDate(code.getValidToInRequestedRange()));
 		begrep.setGyldighetsperiode(periode);
+		systemId.setGyldighetsperiode(periode);
 	}
 	
 	private static Date parseDate(String input) {
