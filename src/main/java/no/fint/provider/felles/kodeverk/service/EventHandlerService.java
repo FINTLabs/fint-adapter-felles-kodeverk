@@ -164,8 +164,4 @@ public class EventHandlerService {
 		return true;
 	}
 
-	@PostConstruct
-	void init() {
-		dataService.update();
-	}
 }
