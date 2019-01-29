@@ -1,48 +1,16 @@
-# FINT Java SSE Adapter Skeleton
-[![FINT javadocs](https://img.shields.io/badge/FINT-javadocs-blue.svg)](https://docs.felleskomponent.no/fint-sse-adapter-skeleton/)
+# FINT Adapter Felles Kodeverk
 
-## Introduction
-This project is a skeleton for develop FINT Java SSE adapter. You can find more information about adapter development in
-the following links:
+## Configuration properties
 
-* [Overview](https://fintprosjektet.github.io/adapter/overview/)
-* [Tutorial](https://fintprosjektet.github.io/adapter/tut-java-sse/)
-
-## Packages and files
-The adapter is divided into to main packages. The `adapter package` is the core adapter code. In general this don't need
-any customization. The `customcode package` (which should be named for example after the application the adapter talks to)
-is where the logic of the adapter is placed.
-
-### EventHandlerService.java
-The actions is handled in the `handleEvent()` method. The actions are defined as enums in the models:
-
-```java
-  public void handleEvent(Event event) {
-   if (event.isHealthCheck()) {
-       postHealthCheckResponse(event);
-   } else {
-       Event<FintResource> responseEvent = new Event<>(event);
-       responseEvent.setStatus(Status.PROVIDER_ACCEPTED);
-       eventStatusService.postStatus(responseEvent);
-
-       /*
-        * Add if statements for all the actions
-        */
-
-       responseEvent.setStatus(Status.PROVIDER_RESPONSE);
-       eventResponseService.postResponse(responseEvent);
-   }
-}
-```
-
-## Adapter configuration
-| Key | Description | Example |
-|-----|-------------|---------|
-| fint.adapter.organizations | List of orgIds the adapter handles. | rogfk.no, vaf.no, ofk.no |
-| fint.adapter.sse-endpoint | Url to the sse endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/sse/%s |
-| fint.adapter.status-endpoint | Url to the status endpoint. | https://play-with-fint-adapter.felleskomponent.no//provider/status |
-| fint.adapter.response-endpoint | Url to the response endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/response |
-
-
-- **[SSE Configuration](https://github.com/FINTlibs/fint-sse#sse-configuration)**
-- **[OAuth Configuration](https://github.com/FINTlibs/fint-sse#oauth-configuration)** 
+| Property | Description | Default |
+|----------|-------------|---------|
+| `fint.adapter.organizations` | Organizations to deliver data for | _none_ |
+| `fint.adapter.sse-endpoint`  | Endpoint for SSE events | _none_ |
+| `fint.adapter.status-endpoint` | Endpoint for event status updates | _none_ |
+| `fint.adapter.response-endpoint` | Endpoint for event responses | _none_ |
+| `fint.adapter.ssb-klass.root-url` | Endpoint for SSB classifications | http://data.ssb.no/api/klass/v1/classifications | 
+| `fint.adapter.ssb-klass.kommune` | SSB classification code for _Kommune_ | 131 |
+| `fint.adapter.ssb-klass.fylke` | SSB classification code for _Fylke_ | 104 |
+| `fint.adapter.ssb-klass.valid-from` | Default _valid from_ date to request from SSB | `1900-01-01` |
+| `fint.adapter.ssb-klass.valid-to` | Default _valid to_ date to request from SSB | `2199-12-31` |
+| `fint.adapter.ssb-klass.interval` | Default interval to request updates from SSB (cron syntax) | `0 */10 * * * *` |
