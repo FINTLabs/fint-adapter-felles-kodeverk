@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -56,9 +57,13 @@ public class EventStatusService {
      * @param event
      */
     public void postStatus(Event event) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.put(HeaderConstants.ORG_ID, Lists.newArrayList(event.getOrgId()));
-        ResponseEntity<Void> response = restTemplate.exchange(props.getStatusEndpoint(), HttpMethod.POST, new HttpEntity<>(event, headers), Void.class);
-        log.info("Provider POST status response: {}", response.getStatusCode());
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.put(HeaderConstants.ORG_ID, Lists.newArrayList(event.getOrgId()));
+            ResponseEntity<Void> response = restTemplate.exchange(props.getStatusEndpoint(), HttpMethod.POST, new HttpEntity<>(event, headers), Void.class);
+            log.info("Provider POST status response: {}", response.getStatusCode());
+        } catch (RestClientException e) {
+            log.warn("Provider POST status error: {}", e.getMessage());
+        }
     }
 }
