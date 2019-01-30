@@ -40,7 +40,7 @@ public class KlassDataService {
 	@Getter
 	private volatile List<Fylke> fylker;
 
-    @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
+    @Scheduled(initialDelay = 2000, cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
 	public void update() {
 		log.info("Fetching classifications from SSB...");
 		kommuner = client.getCodes(kommuneKode, validFrom, validTo).getCodes().stream().map(Mapper::toKommune).collect(Collectors.toList());
