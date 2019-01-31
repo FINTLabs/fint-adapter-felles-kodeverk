@@ -1,18 +1,5 @@
 package no.fint.provider.felles.kodeverk.service;
 
-import java.security.acl.Owner;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
 import no.fint.event.model.Status;
@@ -20,13 +7,18 @@ import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
 import no.fint.model.felles.kodeverk.KodeverkActions;
 import no.fint.model.felles.kodeverk.iso.IsoActions;
-import no.fint.model.relation.FintResource;
-import no.fint.model.relation.Relation;
+import no.fint.model.resource.FintLinks;
 import no.fint.provider.adapter.event.EventResponseService;
 import no.fint.provider.adapter.event.EventStatusService;
-import no.fint.provider.felles.kodeverk.client.KlassClient;
 import no.fint.provider.felles.kodeverk.client.Kodeverk;
 import no.fint.provider.felles.kodeverk.model.Kode;
+import no.fint.provider.felles.kodeverk.model.Mapper;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * The EventHandlerService receives the <code>event</code> from SSE endpoint
@@ -83,7 +75,7 @@ public class EventHandlerService {
             postHealthCheckResponse(event);
         } else {
             if (eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
-                Event<FintResource> responseEvent = new Event<>(event);
+                Event<FintLinks> responseEvent = new Event<>(event);
                 responseEvent.setStatus(Status.ADAPTER_RESPONSE);
 
                 try {
@@ -106,13 +98,13 @@ public class EventHandlerService {
 
                         switch (action) {
                             case GET_ALL_KJONN:
-                                onGetKodeverk(kodeverk.getKjonn(), responseEvent);
+                                onGetKodeverk(kodeverk.getKjonn(), responseEvent, Mapper::toKjonn);
                                 break;
                             case GET_ALL_LANDKODE:
-                                onGetKodeverk(kodeverk.getLand(), responseEvent);
+                                onGetKodeverk(kodeverk.getLand(), responseEvent, Mapper::toLandkode);
                                 break;
                             case GET_ALL_SPRAK:
-                                onGetKodeverk(kodeverk.getSprak(), responseEvent);
+                                onGetKodeverk(kodeverk.getSprak(), responseEvent, Mapper::toSprak);
                                 break;
                             default:
                                 responseEvent.setStatus(Status.ADAPTER_REJECTED);
@@ -130,17 +122,17 @@ public class EventHandlerService {
     }
 
 
-    private void onGetKodeverk(List<Kode> data, Event<FintResource> responseEvent) {
-        responseEvent.setData(data.stream().map(FintResource::with).collect(Collectors.toList()));
+    private void onGetKodeverk(List<Kode> data, Event<FintLinks> responseEvent, Function<Kode, FintLinks> mapper) {
+        data.stream().map(mapper).forEach(responseEvent::addData);
     }
 
 
-    private void onGetAllFylke(Event<FintResource> responseEvent) {
-        responseEvent.setData(dataService.getFylker().stream().map(FintResource::with).collect(Collectors.toList()));
+    private void onGetAllFylke(Event<FintLinks> responseEvent) {
+        dataService.getFylker().forEach(responseEvent::addData);
     }
 
-    private void onGetAllKommune(Event<FintResource> responseEvent) {
-        responseEvent.setData(dataService.getKommuner().stream().map(FintResource::with).collect(Collectors.toList()));
+    private void onGetAllKommune(Event<FintLinks> responseEvent) {
+        dataService.getKommuner().forEach(responseEvent::addData);
     }
 
     /**

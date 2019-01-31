@@ -8,7 +8,6 @@ import no.fint.event.model.HeaderConstants;
 import no.fint.event.model.Status;
 import no.fint.provider.adapter.FintAdapterProps;
 import no.fint.provider.felles.kodeverk.SupportedActions;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
