@@ -39,6 +39,7 @@ public class KlassDataService {
 	@Getter
 	private volatile List<FylkeResource> fylker;
 
+    @Scheduled(initialDelay = 5000, fixedDelay = Long.MAX_VALUE)
     @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
 	public void update() {
 		log.info("Fetching classifications from SSB...");
