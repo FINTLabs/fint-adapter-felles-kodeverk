@@ -1,16 +1,14 @@
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import no.fint.provider.felles.kodeverk.client.Kodeverk;
+import no.fint.provider.felles.kodeverk.model.Kode;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Test;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import no.fint.provider.felles.kodeverk.client.Kodeverk;
-import no.fint.provider.felles.kodeverk.model.Kode;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class KodeverkTest {
 

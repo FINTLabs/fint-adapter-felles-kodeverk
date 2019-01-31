@@ -1,12 +1,11 @@
 package no.fint.provider.felles.kodeverk.client;
 
+import lombok.extern.slf4j.Slf4j;
+import no.fint.provider.felles.kodeverk.model.KlassCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import lombok.extern.slf4j.Slf4j;
-import no.fint.provider.felles.kodeverk.model.KlassCodes;
 
 @Component
 @Slf4j

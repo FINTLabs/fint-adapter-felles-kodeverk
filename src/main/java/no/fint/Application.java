@@ -1,8 +1,8 @@
 package no.fint;
 
 import com.github.springfox.loader.EnableSpringfox;
-import no.fint.sse.oauth.OAuthConfig;
 import lombok.extern.slf4j.Slf4j;
+import no.fint.sse.oauth.OAuthConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

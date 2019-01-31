@@ -1,15 +1,13 @@
 package no.fint.provider.felles.kodeverk.client;
 
-import java.io.InputStream;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
 import lombok.SneakyThrows;
 import no.fint.provider.felles.kodeverk.model.Kode;
+import org.springframework.stereotype.Component;
+
+import java.io.InputStream;
+import java.util.List;
 
 @Component
 public class Kodeverk {

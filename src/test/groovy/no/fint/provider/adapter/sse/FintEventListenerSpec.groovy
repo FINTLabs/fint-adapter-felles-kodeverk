@@ -3,7 +3,6 @@ package no.fint.provider.adapter.sse
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.provider.felles.kodeverk.service.EventHandlerService
-
 import org.glassfish.jersey.media.sse.InboundEvent
 import spock.lang.Specification
 

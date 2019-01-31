@@ -2,8 +2,8 @@ package no.fint.provider.felles.kodeverk.service;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import no.fint.model.felles.kodeverk.Fylke;
-import no.fint.model.felles.kodeverk.Kommune;
+import no.fint.model.resource.felles.kodeverk.FylkeResource;
+import no.fint.model.resource.felles.kodeverk.KommuneResource;
 import no.fint.provider.felles.kodeverk.client.KlassClient;
 import no.fint.provider.felles.kodeverk.model.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,10 @@ public class KlassDataService {
 	KlassClient client;
 
 	@Getter
-	private volatile List<Kommune> kommuner;
+	private volatile List<KommuneResource> kommuner;
 
 	@Getter
-	private volatile List<Fylke> fylker;
+	private volatile List<FylkeResource> fylker;
 
     @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
 	public void update() {
