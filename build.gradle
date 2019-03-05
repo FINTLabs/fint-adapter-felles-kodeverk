@@ -61,6 +61,7 @@ dependencies {
     compile("no.fint:fint-felles-resource-model-java:${apiVersion}")
 
     compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('org.springframework.boot:spring-boot-starter-actuator')
 	
     testCompile('cglib:cglib-nodep:3.2.10')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
