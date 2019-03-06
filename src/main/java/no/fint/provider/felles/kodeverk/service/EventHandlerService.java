@@ -172,7 +172,7 @@ public class EventHandlerService {
         /*
          * Check application connectivity etc.
          */
-        return !dataService.getKommuner().isEmpty() && !dataService.getFylker().isEmpty();
+        return dataService.isHealthy();
     }
 
 }

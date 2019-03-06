@@ -42,6 +42,7 @@ class EventHandlerServiceSpec extends Specification {
 
         then:
         1 * eventResponseService.postResponse(_ as Event)
+        1 * dataService.isHealthy() >> true
     }
 
     def "Get Kjonn"() {

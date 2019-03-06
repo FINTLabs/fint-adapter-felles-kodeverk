@@ -35,10 +35,10 @@ public class KlassDataService {
     KlassClient client;
 
     @Getter
-    private volatile List<KommuneResource> kommuner = Collections.emptyList();
+    private volatile List<KommuneResource> kommuner;
 
     @Getter
-    private volatile List<FylkeResource> fylker = Collections.emptyList();
+    private volatile List<FylkeResource> fylker;
 
     @Scheduled(initialDelay = 5000, fixedDelay = Long.MAX_VALUE)
     @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
@@ -48,4 +48,7 @@ public class KlassDataService {
         fylker = client.getCodes(fylkeKode, validFrom, validTo).getCodes().stream().map(Mapper::toFylke).collect(Collectors.toList());
     }
 
+    public boolean isHealthy() {
+        return kommuner != null && !kommuner.isEmpty() && fylker != null && !fylker.isEmpty();
+    }
 }
