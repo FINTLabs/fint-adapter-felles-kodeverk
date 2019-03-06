@@ -16,6 +16,10 @@ spec:
         app: adapter-felles-kodeverk
     spec:
       restartPolicy: Always
+      hostAliases:
+        - ip: "137.117.232.241"
+          hostnames:
+            - api.felleskomponent.no
       containers:
       - name: adapter-felles-kodeverk
         image: fintlabs.azurecr.io/adapter-felles-kodeverk:1.0.0
