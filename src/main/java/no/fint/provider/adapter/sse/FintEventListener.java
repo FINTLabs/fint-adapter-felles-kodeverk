@@ -21,7 +21,6 @@ public class FintEventListener extends AbstractEventListener {
 
     @Override
     public void onEvent(Event event) {
-        log.info("EventListener for {}", event.getOrgId());
         log.info("Processing event: {}, for orgId: {}, for client: {}, action: {}",
                 event.getCorrId(),
                 event.getOrgId(),

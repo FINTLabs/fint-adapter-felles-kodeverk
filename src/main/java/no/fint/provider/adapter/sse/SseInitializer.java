@@ -2,6 +2,7 @@ package no.fint.provider.adapter.sse;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.provider.adapter.FintAdapterProps;
@@ -18,6 +19,10 @@ import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Map.Entry;
 
 /**
  * Handles the client connections to the provider SSE endpoint
@@ -39,6 +44,7 @@ public class SseInitializer {
     private TokenService tokenService;
 
     @PostConstruct
+    @Synchronized
     public void init() {
         FintSseConfig config = FintSseConfig.withOrgIds(props.getOrganizations());
         Arrays.asList(props.getOrganizations()).forEach(orgId -> {
@@ -51,16 +57,36 @@ public class SseInitializer {
 
     @Scheduled(initialDelay = 20000L, fixedDelay = 5000L)
     public void checkSseConnection() {
-        for (FintSse sseClient : sseClients) {
-            if (!sseClient.verifyConnection()) {
-                log.info("Reconnecting SSE client");
+        try {
+            Map<String, Long> expired = sseClients
+                    .stream()
+                    .collect(Collectors.toMap(FintSse::getSseUrl, FintSse::getAge, Math::max))
+                    .entrySet()
+                    .stream()
+                    .filter(e -> e.getValue() > props.getExpiration())
+                    .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            if (!expired.isEmpty()) {
+                log.warn("Stale connections detected: {}", expired);
+                cleanup();
+                init();
+            } else {
+                for (FintSse sseClient : sseClients) {
+                    if (!sseClient.verifyConnection()) {
+                        log.info("Reconnecting SSE client {}", sseClient.getSseUrl());
+                    }
+                }
             }
+        } catch (Exception e) {
+            log.error("Unexpected error during SSE connection check!", e);
         }
     }
 
     @PreDestroy
+    @Synchronized
     public void cleanup() {
-        for (FintSse sseClient : sseClients) {
+        List<FintSse> oldClients = sseClients;
+        sseClients = new ArrayList<>();
+        for (FintSse sseClient : oldClients) {
             sseClient.close();
         }
     }

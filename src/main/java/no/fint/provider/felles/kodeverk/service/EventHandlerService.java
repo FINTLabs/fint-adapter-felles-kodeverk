@@ -2,6 +2,7 @@ package no.fint.provider.felles.kodeverk.service;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
+import no.fint.event.model.ResponseStatus;
 import no.fint.event.model.Status;
 import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
@@ -80,9 +81,8 @@ public class EventHandlerService {
 
                 try {
                     if (KodeverkActions.getActions().contains(event.getAction())) {
-                        KodeverkActions action = KodeverkActions.valueOf(event.getAction());
 
-                        switch (action) {
+                        switch (KodeverkActions.valueOf(event.getAction())) {
                             case GET_ALL_FYLKE:
                                 onGetAllFylke(responseEvent);
                                 break;
@@ -91,12 +91,11 @@ public class EventHandlerService {
                                 break;
                             default:
                                 responseEvent.setStatus(Status.ADAPTER_REJECTED);
-                                responseEvent.setMessage("Unsupported action " + action);
+                                responseEvent.setMessage("Unsupported action " + event.getAction());
                         }
                     } else if (IsoActions.getActions().contains(event.getAction())) {
-                        IsoActions action = IsoActions.valueOf(event.getAction());
 
-                        switch (action) {
+                        switch (IsoActions.valueOf(event.getAction())) {
                             case GET_ALL_KJONN:
                                 onGetKodeverk(kodeverk.getKjonn(), responseEvent, Mapper::toKjonn);
                                 break;
@@ -108,15 +107,25 @@ public class EventHandlerService {
                                 break;
                             default:
                                 responseEvent.setStatus(Status.ADAPTER_REJECTED);
-                                responseEvent.setMessage("Unsupported action " + action);
+                                responseEvent.setMessage("Unsupported action " + event.getAction());
                         }
+
+                    } else {
+                        responseEvent.setStatus(Status.ADAPTER_REJECTED);
+                        responseEvent.setMessage("Unsupported action " + event.getAction());
                     }
 
                 } catch (Exception e) {
-                    responseEvent.setStatus(Status.ERROR);
+                    responseEvent.setResponseStatus(ResponseStatus.ERROR);
                     responseEvent.setMessage(ExceptionUtils.getStackTrace(e));
+                } finally {
+                    if (responseEvent.getData() != null) {
+                        log.info("Response for {}: {}, {} items", responseEvent.getAction(), responseEvent.getResponseStatus(), responseEvent.getData().size());
+                    } else {
+                        log.info("Response for {}: {}", responseEvent.getAction(), responseEvent.getResponseStatus());
+                    }
+                    eventResponseService.postResponse(event);
                 }
-                eventResponseService.postResponse(responseEvent);
             }
         }
     }
@@ -140,15 +149,15 @@ public class EventHandlerService {
      *
      * @param event The event object
      */
-    public void postHealthCheckResponse(Event event) {
+    private void postHealthCheckResponse(Event event) {
         Event<Health> healthCheckEvent = new Event<>(event);
         healthCheckEvent.setStatus(Status.TEMP_UPSTREAM_QUEUE);
 
         if (healthCheck()) {
-            healthCheckEvent.addData(new Health("adapter", HealthStatus.APPLICATION_HEALTHY.name()));
+            healthCheckEvent.addData(new Health("adapter", HealthStatus.APPLICATION_HEALTHY));
         } else {
             healthCheckEvent.addData(new Health("adapter", HealthStatus.APPLICATION_UNHEALTHY));
-            healthCheckEvent.setMessage("The adapter is unable to communicate with the application.");
+            healthCheckEvent.setMessage("Unable to fetch data from SSB.");
         }
 
         eventResponseService.postResponse(healthCheckEvent);
@@ -163,7 +172,7 @@ public class EventHandlerService {
         /*
          * Check application connectivity etc.
          */
-        return true;
+        return !dataService.getKommuner().isEmpty() && !dataService.getFylker().isEmpty();
     }
 
 }

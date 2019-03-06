@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,10 +35,10 @@ public class KlassDataService {
     KlassClient client;
 
     @Getter
-    private volatile List<KommuneResource> kommuner;
+    private volatile List<KommuneResource> kommuner = Collections.emptyList();
 
     @Getter
-    private volatile List<FylkeResource> fylker;
+    private volatile List<FylkeResource> fylker = Collections.emptyList();
 
     @Scheduled(initialDelay = 5000, fixedDelay = Long.MAX_VALUE)
     @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")

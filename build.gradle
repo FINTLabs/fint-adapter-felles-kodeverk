@@ -56,16 +56,16 @@ dependencies {
     compile('org.glassfish.jersey.core:jersey-client:2.28')
     compile('org.apache.commons:commons-lang3:3.8.1')
 
-    compile('no.fint:fint-sse:1.2.0')
+    compile('no.fint:fint-sse:1.4.0-rc-1')
     compile('no.fint:fint-event-model:3.0.0')
     compile("no.fint:fint-felles-resource-model-java:${apiVersion}")
 
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-starter-actuator')
 	
-    testCompile('cglib:cglib-nodep:3.2.10')
-    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
+    testCompile("cglib:cglib-nodep:${cglibVersion}")
+    testCompile('org.spockframework:spock-spring:1.2-groovy-2.4')
+    testCompile('org.spockframework:spock-core:1.2-groovy-2.4')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
