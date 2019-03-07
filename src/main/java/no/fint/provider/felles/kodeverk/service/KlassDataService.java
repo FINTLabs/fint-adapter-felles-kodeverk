@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +39,7 @@ public class KlassDataService {
     @Getter
     private volatile List<FylkeResource> fylker;
 
-    @Scheduled(initialDelay = 5000, fixedDelay = Long.MAX_VALUE)
-    @Scheduled(cron = "${fint.adapter.ssb-klass.interval:0 */10 * * * *}")
+    @Scheduled(initialDelay = 6000, fixedDelayString = "${fint.adapter.ssb-klass.interval:3600000}")
     public void update() {
         log.info("Fetching classifications from SSB...");
         kommuner = client.getCodes(kommuneKode, validFrom, validTo).getCodes().stream().map(Mapper::toKommune).collect(Collectors.toList());

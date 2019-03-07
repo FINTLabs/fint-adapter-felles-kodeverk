@@ -78,4 +78,4 @@ spec:
           # - name: fint.adapter.ssb-klass.valid-to
           #   value: "2017-12-31"
           - name: fint.adapter.ssb-klass.interval
-            value: "0 0 9-17 * * MON-FRI"
+            value: "7200000"
