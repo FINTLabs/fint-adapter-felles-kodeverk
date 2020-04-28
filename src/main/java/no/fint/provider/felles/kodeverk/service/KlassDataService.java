@@ -6,11 +6,14 @@ import no.fint.model.resource.felles.kodeverk.FylkeResource;
 import no.fint.model.resource.felles.kodeverk.KommuneResource;
 import no.fint.provider.felles.kodeverk.client.KlassClient;
 import no.fint.provider.felles.kodeverk.model.Mapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +27,8 @@ public class KlassDataService {
     @Value("${fint.adapter.ssb-klass.fylke:104}")
     String fylkeKode;
 
-    @Value("${fint.adapter.ssb-klass.valid-from:1900-01-01}")
-    String validFrom;
-
-    @Value("${fint.adapter.ssb-klass.valid-to:2199-12-31}")
-    String validTo;
+    @Value("${fint.adapter.ssb-klass.date:}")
+    String date;
 
     @Autowired
     KlassClient client;
@@ -42,8 +42,12 @@ public class KlassDataService {
     @Scheduled(initialDelay = 6000, fixedDelayString = "${fint.adapter.ssb-klass.interval:3600000}")
     public void update() {
         log.info("Fetching classifications from SSB...");
-        kommuner = client.getCodes(kommuneKode, validFrom, validTo).getCodes().stream().map(Mapper::toKommune).collect(Collectors.toList());
-        fylker = client.getCodes(fylkeKode, validFrom, validTo).getCodes().stream().map(Mapper::toFylke).collect(Collectors.toList());
+        String currentDate = date;
+        if (StringUtils.isBlank(currentDate)) {
+            currentDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        }
+        kommuner = client.getCodes(kommuneKode, currentDate).getCodes().stream().map(Mapper::toKommune).collect(Collectors.toList());
+        fylker = client.getCodes(fylkeKode, currentDate).getCodes().stream().map(Mapper::toFylke).collect(Collectors.toList());
     }
 
     public boolean isHealthy() {

@@ -17,9 +17,9 @@ public class KlassClient {
 	@Value("${fint.adapter.ssb-klass.root-url:http://data.ssb.no/api/klass/v1/classifications}")
 	String rootURL;
 
-	public KlassCodes getCodes(String classification, String fromDate, String toDate) {
-		log.info("Fetching {} for {}...{}", classification, fromDate, toDate);
-		KlassCodes codes = restTemplate.getForObject(rootURL + "/{classification}/codes?from={fromDate}&to={toDate}", KlassCodes.class, classification, fromDate, toDate);
+	public KlassCodes getCodes(String classification, String date) {
+		log.info("Fetching {} for {}", classification, date);
+		KlassCodes codes = restTemplate.getForObject(rootURL + "/{classification}/codesAt?date={date}", KlassCodes.class, classification, date);
 		return codes;
 	}
 }
