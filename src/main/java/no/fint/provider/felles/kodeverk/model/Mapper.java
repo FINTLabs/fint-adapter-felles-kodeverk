@@ -36,11 +36,13 @@ public class Mapper {
         begrep.setSystemId(systemId);
 		begrep.setKode(code.getCode());
 		begrep.setNavn(code.getName());
-		Periode periode = new Periode();
-		periode.setStart(parseDate(code.getValidFromInRequestedRange(), false));
-		periode.setSlutt(parseDate(code.getValidToInRequestedRange(), true));
-		begrep.setGyldighetsperiode(periode);
-		systemId.setGyldighetsperiode(periode);
+		if (code.getValidFromInRequestedRange() != null && code.getValidToInRequestedRange() != null) {
+			Periode periode = new Periode();
+			periode.setStart(parseDate(code.getValidFromInRequestedRange(), false));
+			periode.setSlutt(parseDate(code.getValidToInRequestedRange(), true));
+			begrep.setGyldighetsperiode(periode);
+			systemId.setGyldighetsperiode(periode);
+		}
 	}
 	
 	private static Date parseDate(String input, boolean end) {
