@@ -58,6 +58,7 @@ dependencies {
 
     compile('no.fint:fint-sse:1.4.0-rc-1')
     compile('no.fint:fint-event-model:3.0.0')
+    compile('no.fint:fint-model-resource:+')
     compile("no.fint:fint-felles-resource-model-java:${apiVersion}")
 
     compile('org.springframework.boot:spring-boot-starter-web')
