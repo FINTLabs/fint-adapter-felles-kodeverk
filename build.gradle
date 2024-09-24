@@ -1,82 +1,59 @@
-buildscript {
-    apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.6.0/dependencies.gradle'
-    ext {
-        springBootVersion = springBootVersion
-    }
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
 plugins {
-    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id 'com.github.ben-manes.versions' version '0.48.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
 }
 
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'org.springframework.boot'
+group = 'no.fintlabs'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
-javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.compile
-    options.windowTitle = 'FINT Java SSE Adapter Felles Kodeverk'
-    options.memberLevel = JavadocMemberLevel.PRIVATE
-    destinationDir = file('./javadocs/')
+jar {
+    enabled = false
 }
 
-import org.apache.tools.ant.filters.ReplaceTokens
-afterEvaluate {
-    configure(processResources) {
-        filesMatching('**/*.yml') {
-            filter(ReplaceTokens, tokens: [version: jar.version])
-        }
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
-
-
-sourceCompatibility = 1.8
 
 repositories {
     mavenLocal()
-    jcenter()
     maven {
-        url 'http://dl.bintray.com/fint/maven'
+        url "https://repo.fintlabs.no/releases"
     }
+    mavenCentral()
 }
+
 
 dependencies {
-    compile("org.projectlombok:lombok:${lombokVersion}")
-    compile('com.github.springfox.loader:springfox-loader:1.2.0')
-    compile('org.glassfish.jersey.core:jersey-common:2.28')
-    compile('org.glassfish.jersey.core:jersey-client:2.28')
-    compile('org.apache.commons:commons-lang3:3.8.1')
+    implementation 'org.glassfish.jersey.core:jersey-common:2.35'
+    implementation 'org.glassfish.jersey.core:jersey-client:2.35'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.google.guava:guava:33.3.0-jre'
 
-    compile('no.fint:fint-sse:1.4.0-rc-1')
-    compile('no.fint:fint-event-model:3.0.0')
-    compile("no.fint:fint-felles-resource-model-java:${apiVersion}")
+    implementation 'no.fint:fint-sse:1.4.1'
+    implementation 'no.fint:fint-event-model:3.0.2'
+    implementation 'no.fint:fint-felles-resource-model-java:3.18.0'
 
-    compile('org.springframework.boot:spring-boot-starter-web')
-    runtime('org.springframework.boot:spring-boot-starter-actuator')
-	
-    testCompile("cglib:cglib-nodep:3.2.9")
-    testCompile("org.spockframework:spock-spring:1.1-groovy-2.4")
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-}
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-bootRun {
-    systemProperties System.properties
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    testImplementation 'cglib:cglib-nodep:3.3.0'
+    testImplementation 'org.spockframework:spock-spring:2.0-M5-groovy-3.0'
+    testImplementation 'org.spockframework:spock-core:2.0-M5-groovy-3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
 }
 
 test {
-    testLogging {
-        events 'passed', 'skipped', 'failed'
-    }
+    useJUnitPlatform()
 }
-
-apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.6.0/dependencyReport.gradle'
