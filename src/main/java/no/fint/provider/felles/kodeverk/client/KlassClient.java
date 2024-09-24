@@ -14,7 +14,7 @@ public class KlassClient {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	@Value("${fint.adapter.ssb-klass.root-url:http://data.ssb.no/api/klass/v1/classifications}")
+	@Value("${fint.adapter.ssb-klass.root-url:https://data.ssb.no/api/klass/v1/classifications}")
 	String rootURL;
 
 	public KlassCodes getCodes(String classification, String date) {
