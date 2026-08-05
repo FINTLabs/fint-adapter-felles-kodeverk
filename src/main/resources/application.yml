@@ -5,6 +5,12 @@ security:
   basic:
     enabled: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, shutdown, prometheus
+
 springfox:
   title: 'FINT SSE Adapter Felles Kodeverk'
   version: '@version@'
