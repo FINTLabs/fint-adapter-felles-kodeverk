@@ -1,6 +1,10 @@
 server:
   port: 8091
 
+security:
+  basic:
+    enabled: false
+
 springfox:
   title: 'FINT SSE Adapter Felles Kodeverk'
   version: '@version@'
