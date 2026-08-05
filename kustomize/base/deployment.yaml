@@ -18,7 +18,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: adapter-felles-kodeverk
-        image: fintlabsacr.azurecr.io/adapter-felles-kodeverk:build.14
+        image: ghcr.io/fintlabs/fint-adapter-felles-kodeverk
         resources:
           limits:
             memory: "1000M"
