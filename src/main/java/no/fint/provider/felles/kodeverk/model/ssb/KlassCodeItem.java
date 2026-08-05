@@ -1,10 +1,9 @@
-package no.fint.provider.felles.kodeverk.model;
+package no.fint.provider.felles.kodeverk.model.ssb;
 
 import lombok.Data;
 
 @Data
-public class KlassCode {
-
+public class KlassCodeItem {
 	String code;
 	String parentCode;
 	String level;
@@ -13,5 +12,4 @@ public class KlassCode {
 	String presentationName;
 	String validFromInRequestedRange;
 	String validToInRequestedRange;
-	
 }
