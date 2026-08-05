@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: adapter-felles-kodeverk
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: fint.adapter.sse-endpoint
+          value: https://beta.felleskomponent.no/felles/kodeverk/provider/sse/%s
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: fint.adapter.status-endpoint
+          value: https://beta.felleskomponent.no/felles/kodeverk/provider/status
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: fint.adapter.response-endpoint
+          value: https://beta.felleskomponent.no/felles/kodeverk/provider/response
+  - target:
+      kind: OnePasswordItem
+      name: fake-adapter
+    patch: |-
+      - op: replace
+        path: /spec/itemPath
+        value: "vaults/aks-beta-vault/items/fake-adapter"
