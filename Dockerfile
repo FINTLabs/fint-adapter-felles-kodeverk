@@ -4,7 +4,7 @@ COPY . .
 ARG apiVersion
 RUN gradle --no-daemon -PapiVersion=${apiVersion} build
 
-FROM gcr.io/distroless/java
+FROM gcr.io/distroless/java17-debian12
 ENV JAVA_TOOL_OPTIONS="-XX:+ExitOnOutOfMemoryError"
 COPY --from=builder /home/gradle/build/libs/fint-adapter-felles-kodeverk-*.jar /data/fint-adapter-felles-kodeverk.jar
 CMD ["/data/fint-adapter-felles-kodeverk.jar"]
