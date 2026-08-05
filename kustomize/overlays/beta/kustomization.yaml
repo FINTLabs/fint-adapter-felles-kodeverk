@@ -11,6 +11,18 @@ patches:
       kind: Deployment
       name: adapter-felles-kodeverk
     patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources
+        value:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: '-XX:+ExitOnOutOfMemoryError -Xms512M -Xmx1G -verbose:gc'
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value:
