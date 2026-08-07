@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
+    id 'groovy'
     id 'com.github.ben-manes.versions' version '0.48.0'
     id 'se.patrikerdes.use-latest-versions' version '0.2.18'
 }
@@ -30,12 +31,12 @@ repositories {
 
 
 dependencies {
-    implementation 'org.glassfish.jersey.core:jersey-common:2.35'
-    implementation 'org.glassfish.jersey.core:jersey-client:2.35'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.glassfish.jersey.core:jersey-common:2.46'
+    implementation 'org.glassfish.jersey.core:jersey-client:2.46'
+    implementation 'org.apache.commons:commons-lang3:3.18.0'
     implementation 'com.google.guava:guava:33.3.0-jre'
 
-    implementation 'no.fint:fint-sse:1.4.1'
+    implementation 'no.fint:fint-sse:2.0.1'
     implementation 'no.fint:fint-event-model:3.0.2'
     implementation 'no.fint:fint-felles-resource-model-java:3.18.0'
 
@@ -46,8 +47,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     testImplementation 'cglib:cglib-nodep:3.3.0'
-    testImplementation 'org.spockframework:spock-spring:2.0-M5-groovy-3.0'
-    testImplementation 'org.spockframework:spock-core:2.0-M5-groovy-3.0'
+    testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'

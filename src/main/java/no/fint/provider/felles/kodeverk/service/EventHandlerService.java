@@ -124,7 +124,7 @@ public class EventHandlerService {
                     } else {
                         log.info("Response for {}: {}", responseEvent.getAction(), responseEvent.getResponseStatus());
                     }
-                    eventResponseService.postResponse(event);
+                    eventResponseService.postResponse(responseEvent);
                 }
             }
         }

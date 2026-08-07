@@ -1,6 +1,16 @@
 server:
   port: 8091
 
+security:
+  basic:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, shutdown, prometheus
+
 springfox:
   title: 'FINT SSE Adapter Felles Kodeverk'
   version: '@version@'
@@ -18,10 +28,3 @@ fint:
     kommune: 131
     fylke: 104
 
-  oauth:
-    enabled: true
-    username: pwfatut
-    password: pwfatut
-    client-id: 6e1cf7b4-b107-42b3-9435-8fda70726c6a
-    client-secret: 6y4FUuP9BfAXeVqguNKT0ofToIwN5RdB1PaUvx_nCMiQbH9NeGq3pp0jQB9zOQ0APOxEbodzJXp-8RVux6318A
-    access-token-uri: https://namidp01.rogfk.no/nidp/oauth/nam/token

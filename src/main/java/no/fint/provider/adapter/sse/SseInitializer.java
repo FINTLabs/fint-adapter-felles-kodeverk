@@ -9,7 +9,7 @@ import no.fint.provider.adapter.FintAdapterProps;
 import no.fint.provider.felles.kodeverk.service.EventHandlerService;
 import no.fint.sse.FintSse;
 import no.fint.sse.FintSseConfig;
-import no.fint.sse.oauth.TokenService;
+import no.fint.oauth.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

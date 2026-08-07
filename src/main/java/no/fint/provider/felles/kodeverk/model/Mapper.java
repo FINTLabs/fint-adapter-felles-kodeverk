@@ -8,6 +8,7 @@ import no.fint.model.resource.felles.kodeverk.KommuneResource;
 import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
 import no.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
 import no.fint.model.resource.felles.kodeverk.iso.SprakResource;
+import no.fint.provider.felles.kodeverk.model.ssb.KlassCodeItem;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,19 +19,19 @@ import java.util.Date;
 
 public class Mapper {
 
-	public static KommuneResource toKommune(KlassCode code) {
+	public static KommuneResource toKommune(KlassCodeItem code) {
 		KommuneResource k = new KommuneResource();
 		copy(code, k);
 		return k;
 	}
 	
-	public static FylkeResource toFylke(KlassCode code) {
+	public static FylkeResource toFylke(KlassCodeItem code) {
 		FylkeResource f = new FylkeResource();
 		copy(code, f);
 		return f;
 	}
 	
-	private static void copy(KlassCode code, Begrep begrep) {
+	private static void copy(KlassCodeItem code, Begrep begrep) {
         Identifikator systemId = new Identifikator();
         systemId.setIdentifikatorverdi(code.getCode());
         begrep.setSystemId(systemId);
