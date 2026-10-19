@@ -66,8 +66,8 @@ public class KlassDataService {
                 FylkeResource fylke = fylkeMap.get(correspondence.getSourceCode());
                 KommuneResource kommune = kommuneMap.get(correspondence.getTargetCode());
                 if (fylke != null && kommune != null) {
-                    fylke.addKommune(Link.with(KommuneResource.class, kommune.getKode()));
-                    kommune.addFylke(Link.with(FylkeResource.class, fylke.getKode()));
+                    fylke.addKommune(Link.with(KommuneResource.class, "systemid", kommune.getSystemId().getIdentifikatorverdi()));
+                    kommune.addFylke(Link.with(FylkeResource.class, "systemid", fylke.getSystemId().getIdentifikatorverdi()));
                 }
             }
         }
