@@ -48,7 +48,8 @@ class KlassDataServiceSpec extends Specification {
         fylkeResource.navn == 'Oslo'
         fylkeResource.kommune != null
         fylkeResource.kommune.size() == 1
-        fylkeResource.kommune[0] == Link.with(KommuneResource, '0301')
+        fylkeResource.kommune[0] == Link.with(KommuneResource, 'systemid', '0301')
+        fylkeResource.kommune[0].href == '${felles.kodeverk.kommune}/systemid/0301'
 
         dataService.kommuner.size() == 1
         def kommuneResource = dataService.kommuner[0]
@@ -57,7 +58,8 @@ class KlassDataServiceSpec extends Specification {
         kommuneResource.navn == 'Oslo'
         kommuneResource.fylke != null
         kommuneResource.fylke.size() == 1
-        kommuneResource.fylke[0] == Link.with(FylkeResource, '03')
+        kommuneResource.fylke[0] == Link.with(FylkeResource, 'systemid', '03')
+        kommuneResource.fylke[0].href == '${felles.kodeverk.fylke}/systemid/03'
     }
 
     def "Agder FylkeResource contains links to both Grimstad and Lillesand"() {
@@ -84,9 +86,9 @@ class KlassDataServiceSpec extends Specification {
         fylkeResource.navn == 'Agder'
         fylkeResource.kommune != null
         fylkeResource.kommune.size() == 2
-        fylkeResource.kommune.containsAll([Link.with(KommuneResource, '4202'),
-                                           Link.with(KommuneResource, '4215')])
+        fylkeResource.kommune.containsAll([Link.with(KommuneResource, 'systemid', '4202'),
+                                           Link.with(KommuneResource, 'systemid', '4215')])
         dataService.kommuner.size() == 2
-        dataService.kommuner.every { it.fylke[0] == Link.with(FylkeResource, '42') }
+        dataService.kommuner.every { it.fylke[0] == Link.with(FylkeResource, 'systemid', '42') }
     }
 }
