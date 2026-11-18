@@ -75,3 +75,6 @@ spec:
             value: "7200000"
           - name: fint.adapter.ssb-klass.root-url
             value: "https://data.ssb.no/api/klass/v1/classifications"
+          # Java4Shell (CVE-2026-114938): turn off the Base64 intrinsic until the JDK has a fix.
+          - name: JDK_JAVA_OPTIONS
+            value: -XX:-UseBASE64Intrinsics
