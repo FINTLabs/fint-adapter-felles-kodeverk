@@ -1,10 +1,10 @@
-FROM gradle:7.6.4-jdk17 AS builder
+FROM gradle:9.9.2-jdk17 AS builder
 USER root
 COPY . .
 ARG apiVersion
 RUN gradle --no-daemon -PapiVersion=${apiVersion} build
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:25-jre
 ENV JAVA_TOOL_OPTIONS="-XX:+ExitOnOutOfMemoryError"
 COPY --from=builder /home/gradle/build/libs/fint-adapter-felles-kodeverk-*.jar /data/fint-adapter-felles-kodeverk.jar
 ENTRYPOINT ["java", "-jar", "/data/fint-adapter-felles-kodeverk.jar"]
