@@ -37,8 +37,8 @@ dependencies {
     implementation 'com.google.guava:guava:33.3.0-jre'
 
     implementation 'no.fint:fint-sse:2.0.1'
-    implementation 'no.fint:fint-event-model:3.0.2'
-    implementation 'no.fint:fint-felles-resource-model-java:3.18.0'
+    implementation 'no.fint:fint-event-model:4.0.0'
+    implementation 'no.fint:fint-felles-resource-model-java:3.19.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
